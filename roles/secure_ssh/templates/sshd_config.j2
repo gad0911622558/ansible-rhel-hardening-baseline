@@ -1,0 +1,19 @@
+# custom hardened ssh configuration 
+Port {{ ssh_port }}
+AddressFamily any 
+ListenAddress 0.0.0.0 
+
+# authentication 
+PermitRootLogin {{ ssh_permit_root_login }}
+PasswordAuthentication {{ ssh_password_authentication }}
+PubKeyAuthentication yes
+#PermitEmptPasswords no 
+# security hardening 
+MaxAuthTries 3
+#MaxSessions 5
+LoginGraceTime 30
+ClientAliveInterval 300
+ClientAliveCountMax 2
+#XllForwardding no 
+AllowTcpForwarding no
+

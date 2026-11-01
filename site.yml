@@ -1,0 +1,10 @@
+---
+ - name: apply ssh handening to all servers 
+   hosts: all_servers
+   become: true
+   vars_files:
+    - secrets.yml 
+   roles: 
+    - secure_ssh
+    - secure_users
+    - system_updates

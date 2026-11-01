@@ -1,0 +1,19 @@
+---
+# tasks file for roles/secure_users
+- name: create admin user
+  user: 
+    name: "{{ admin_user }}"
+    groups: wheel
+    append: yes
+    state: present
+    shell: /bin/bash
+    password: "{{ sysadmin_password | password_hash( 'sha512' ) }}"
+    
+
+- name: cofigure sudoers for admin user (wiht logging)
+  copy: 
+    dest: /etc/sudoers.d/{{ admin_user }}
+    content: |
+       {{ admin_user }} ALL=(ALL) ALL
+    mode: '0440' 
+    validate: 'visudo -cf %s'  

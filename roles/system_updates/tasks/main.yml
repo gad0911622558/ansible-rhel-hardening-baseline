@@ -1,0 +1,30 @@
+---
+# tasks file for roles/system_updates
+- name: ensure chronyd is installed and running 
+  dnf: 
+    name: chrony
+    state: present
+
+- name: start and enable chronyd
+  service: 
+    name: chronyd 
+    state: started
+    enabled: true
+
+- name: install DNF Automatic
+  dnf: 
+    name: dnf-automatic 
+    state: present
+
+- name: configure DNF automatic for security updates only
+  lineinfile:
+     path: /etc/dnf/automatic.conf
+     regexp: '^upgrade_type'
+     line: 'upgrade_type = security'
+
+- name: enable and start DNF automatic timer
+  systemd:
+    name: dnf-automatic.timer
+    state: started 
+    enabled: true
+    daemon_reload: true

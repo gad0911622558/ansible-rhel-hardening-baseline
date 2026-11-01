@@ -1,0 +1,20 @@
+---
+# handlers file for roles/secure_ssh
+# - name: Open new SSH port in firewall
+ #  firewalld: 
+  #    port: " {{ ssh_port }}/tcp" 
+   #   permanent: true 
+    #  state: enabled
+     # immediate: true
+
+ - name: Restart sshd
+   service: 
+     name: sshd
+     state: restarted 
+
+ - name: Close old SSH port in firewall
+   firewalld: 
+     port: 22/tcp 
+     permanent: true 
+     state: disabled
+     immediate: true
